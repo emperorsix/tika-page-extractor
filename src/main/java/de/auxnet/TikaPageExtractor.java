@@ -196,7 +196,7 @@ public class TikaPageExtractor {
 				parser.parse(is, handler, metadata);
 
 				// if pdf, you have to set fullText to true in order to get it
-				if (!mediaType.getSubtype().equals("pdf") || !fullText) {
+				if (!mediaType.getSubtype().equals("pdf") || fullText) {
 					// compact whitespace and trim string
 					String contentText = handler.toString();
 					if (compressText)
