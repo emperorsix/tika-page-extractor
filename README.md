@@ -3,7 +3,7 @@
 This application set up a server that extracts content from PDFs and returns it as
 JSON string, one entry per page.
 
--> [Download](https://www.auxnet.de/wp-content/uploads/2016/03/TikaPageExtractor.zip)
+-> [Download zipped Binary](https://www.auxnet.de/wp-content/uploads/2016/03/TikaPageExtractor.zip)
 
 Start server using:
 
