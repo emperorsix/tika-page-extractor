@@ -164,7 +164,7 @@ public class TikaPageExtractor {
 		get("/", (req, res) -> "This is a TikaPageExtractor instance - please put PDF files.");
 
 		// put pdf file
-		put("/", (request, response) -> "Please put a file.");
+		put("/", (request, response) -> "Please put a file - add file name as path parameter like \"http://localhost:9090/myfile.pdf\".");
 
 		// put pdf file
 		put("/:file", (request, response) -> {
