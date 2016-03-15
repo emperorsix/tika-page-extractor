@@ -127,7 +127,7 @@ public class PageContentHandler extends ToTextContentHandler {
 
 		// convert to list
 		for (int i = 1; i <= pageNumber; i++) {
-			String page = pages.get(pageNumber);
+			String page = pages.get(i);
 			if (page == null) page = "";
 
 			pagesReal.add(page);
