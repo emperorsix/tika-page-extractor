@@ -1,0 +1,14 @@
+# Move to /etc/systemd/system/tika_page_extractor.service or some similar place and execute:
+# systemctl start tika_page_extractor.service as root
+[Unit]
+Description=Tika Page Extractor Service
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/java -jar /path/to/TikaPageExtractor.jar
+TimeoutSec=300
+
+[Install]
+WantedBy=multi-user.target
