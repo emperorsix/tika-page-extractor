@@ -1,5 +1,6 @@
 # Move to /etc/systemd/system/tika_page_extractor.service or some similar place and execute:
-# systemctl start tika_page_extractor.service as root
+# systemctl enable tika_page_extractor.service (as root)
+# systemctl start tika_page_extractor.service (as root)
 [Unit]
 Description=Tika Page Extractor Service
 After=syslog.target
