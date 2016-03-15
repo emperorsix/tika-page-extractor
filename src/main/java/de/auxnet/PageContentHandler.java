@@ -24,7 +24,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Page Content Handler to parse Tika extracted content into a list containing pages
@@ -42,10 +44,15 @@ public class PageContentHandler extends ToTextContentHandler {
 	private StringBuilder builder;
 
 	/**
-	 * page list - setting the initial capacity to 500 will enhance speed by a tiny bit up to 500 bits, but will require
-	 * some RAM
+	 * page counter
 	 */
-	private List<String> pages = new ArrayList<>(500);
+	private int pageNumber = 0;
+
+	/**
+	 * page map - setting the initial capacity to 500 will enhance speed by a tiny bit up to 500 bits, but will require
+	 * more RAM
+	 */
+	private Map<Integer, String> pages = new HashMap<>(500);
 
 	/**
 	 * flag telling to compress text information by stripping whitespace?
@@ -90,6 +97,8 @@ public class PageContentHandler extends ToTextContentHandler {
 
 	protected void startPage() throws SAXException {
 		builder = new StringBuilder();
+		pageNumber++;
+		System.out.println(pageNumber);
 	}
 
 	protected void endPage() throws SAXException {
@@ -99,14 +108,31 @@ public class PageContentHandler extends ToTextContentHandler {
 		if (compress)
 			page = page.replaceAll("\\s+", " ").trim();
 
-		// add to page list at end of page list
-		pages.add(page);
+		// page number already exists?
+		if (pages.containsKey(pageNumber)) {
+			page = pages.get(pageNumber) + " " + page; // concatenate pages
+			page = page.trim();
+		}
+
+		// add to page list
+		pages.put(pageNumber, page);
+		builder = new StringBuilder();
 	}
 
 	/**
 	 * @return all extracted pages
 	 */
 	public List<String> getPages() {
-		return pages;
+		List<String> pagesReal = new ArrayList<>(pageNumber);
+
+		// convert to list
+		for (int i = 1; i <= pageNumber; i++) {
+			String page = pages.get(pageNumber);
+			if (page == null) page = "";
+
+			pagesReal.add(page);
+		}
+
+		return pagesReal;
 	}
 }
