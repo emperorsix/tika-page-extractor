@@ -20,6 +20,8 @@ package de.auxnet;
  */
 
 import org.apache.tika.sax.ToTextContentHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
@@ -35,6 +37,11 @@ import java.util.Map;
  * Thanks!
  */
 public class PageContentHandler extends ToTextContentHandler {
+	/**
+	 * logger
+	 */
+	private static final Logger logger = LoggerFactory.getLogger(PageContentHandler.class);
+
 	final static private String pageTag = "div";
 	final static private String pageClass = "page";
 
@@ -98,7 +105,8 @@ public class PageContentHandler extends ToTextContentHandler {
 	protected void startPage() throws SAXException {
 		builder = new StringBuilder();
 		pageNumber++;
-		System.out.println(pageNumber);
+		if (logger.isDebugEnabled())
+			logger.debug("Page: " + pageNumber);
 	}
 
 	protected void endPage() throws SAXException {
@@ -132,6 +140,9 @@ public class PageContentHandler extends ToTextContentHandler {
 
 			pagesReal.add(page);
 		}
+
+		if (logger.isDebugEnabled())
+			logger.debug("Returning " + pageNumber + " page(s).");
 
 		return pagesReal;
 	}
