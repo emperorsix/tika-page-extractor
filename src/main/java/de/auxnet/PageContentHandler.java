@@ -111,6 +111,7 @@ public class PageContentHandler extends ToTextContentHandler {
 
 	protected void endPage() throws SAXException {
 		String page = builder.toString();
+		builder = new StringBuilder();
 
 		// if compression has been turned on, compact whitespace and trim string
 		if (compress)
@@ -118,13 +119,14 @@ public class PageContentHandler extends ToTextContentHandler {
 
 		// page number already exists?
 		if (pages.containsKey(pageNumber)) {
+			if (page.isEmpty()) return; // do not add empty pages to map
+
 			page = pages.get(pageNumber) + " " + page; // concatenate pages
 			page = page.trim();
 		}
 
 		// add to page list
 		pages.put(pageNumber, page);
-		builder = new StringBuilder();
 	}
 
 	/**
